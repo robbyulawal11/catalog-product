@@ -30,7 +30,9 @@ Route::get('/user/{id?}', function($id = 1){
     return 'ID:' . $id;
 })->where('id', '[0-9]+');
 
-Route::get('/bahasa/param/{item?}', function($item = 'apel,anggur'){
+//----------------------------------------------------------------------
+//Tugas Sesi 1
+Route::get('/bahasa/param/{item?}', function($item = 'php,java'){
     $response = explode(',', $item);
     foreach ($response as  $value) {
         echo $value. " ";
@@ -38,14 +40,13 @@ Route::get('/bahasa/param/{item?}', function($item = 'apel,anggur'){
 });
 
 Route::get('/bahasa/request', function(Request $item){
-    // dd($item->all())
     $list = $item -> list;
     foreach ($list as  $value) {
         echo $value. " ";
     }
 
 });
-
+//----------------------------------------------------------------------
 
 
 Route::redirect('/home', '/data');
