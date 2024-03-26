@@ -3,7 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use App\Http\Controllers\PageController;
-
+use App\Http\Controllers\AdminPageController;
+use App\Http\Controllers\AdminPageController2;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -61,12 +62,25 @@ Route::get('/redirect-test', function(){
 
 Route::prefix('/page')->name('page.')->group(function(){
     Route::get('/home', function(){
-        return 'home';
+        return view('pages/home');
     })->name('home');
-    Route::get('/page/about', function(){
-        return 'about';
+    Route::get('/about', function(){
+        return view('pages/about');
     })->name('about');
-    Route::get('/page/contact', function(){
-        return 'contact';
+    Route::get('/contact', function(){
+        return view('pages/contact');
     })->name('contact');
 });
+
+Route::prefix('/admin')->controller(AdminPageController::class)->name('admin.')->group(function(){
+    Route::get('/dashboard', 'dashboard')->name('dashboard');
+    Route::get('/chart', 'chart')->name('chart');
+    Route::get('/table', 'table')->name('table');
+});
+
+Route::prefix('/admin2')->controller(AdminPageController2::class)->name('admin2.')->group(function(){
+    Route::get('/dashboard', 'dashboard')->name('dashboard');
+    Route::get('/chart', 'chart')->name('chart');
+    Route::get('/table', 'table')->name('table');
+});
+
