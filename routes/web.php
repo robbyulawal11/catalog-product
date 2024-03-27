@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\AdminPageController;
 use App\Http\Controllers\AdminPageController2;
+use App\Http\Controllers\SchoolController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -82,5 +83,16 @@ Route::prefix('/admin2')->controller(AdminPageController2::class)->name('admin2.
     Route::get('/dashboard', 'dashboard')->name('dashboard');
     Route::get('/chart', 'chart')->name('chart');
     Route::get('/table', 'table')->name('table');
+});
+
+Route::prefix('/school')->controller(SchoolController::class)->name('school.')->group(function(){
+    Route::get('/', 'index' )->name('index');
+    Route::get('/create', 'create')->name('create');
+    Route::post('/', 'store')->name('store');
+
+    Route::get('/{id}/edit', 'edit')->name('edit');
+    Route::put('/{id}', 'update')->name('update');
+
+    Route::delete('/{id}', 'destroy')->name('destroy');
 });
 
