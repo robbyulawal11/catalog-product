@@ -40,6 +40,15 @@ class SchoolController extends Controller
         return view('pages.school-edit', compact('school'));
     }
 
+    public function show($id)
+    {
+        $school = School::with('students')->findOrFail($id);
+
+        $students = $school->students;
+
+        return view('pages.student.index', compact('students'));
+    }
+
     public function update(Request $request, $id)
     {
         $school = School::findOrFail($id);

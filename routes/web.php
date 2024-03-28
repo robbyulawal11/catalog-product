@@ -6,6 +6,7 @@ use App\Http\Controllers\PageController;
 use App\Http\Controllers\AdminPageController;
 use App\Http\Controllers\AdminPageController2;
 use App\Http\Controllers\SchoolController;
+use App\Http\Controllers\StudentController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -85,14 +86,27 @@ Route::prefix('/admin2')->controller(AdminPageController2::class)->name('admin2.
     Route::get('/table', 'table')->name('table');
 });
 
-Route::prefix('/school')->controller(SchoolController::class)->name('school.')->group(function(){
-    Route::get('/', 'index' )->name('index');
-    Route::get('/create', 'create')->name('create');
-    Route::post('/', 'store')->name('store');
+Route::middleware('auth')->group(function(){
 
-    Route::get('/{id}/edit', 'edit')->name('edit');
-    Route::put('/{id}', 'update')->name('update');
+    Route::middleware('role:admin')->prefix('/school')->controller(SchoolController::class)->name('school.')->group(function(){
+        Route::get('/', 'index' )->name('index');
+        Route::get('/create', 'create')->name('create');
+        Route::post('/', 'store')->name('store');
 
-    Route::delete('/{id}', 'destroy')->name('destroy');
+        Route::get('/{id}', 'show')->name('show');
+
+        Route::get('/{id}/edit', 'edit')->name('edit');
+        Route::put('/{id}', 'update')->name('update');
+
+        Route::delete('/{id}', 'destroy')->name('destroy');
+    });
+
+    Route::middleware('role:admin|member')->group(function(){
+        Route::resource('/student', StudentController::class)->except(['show']);
+    });
 });
 
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
