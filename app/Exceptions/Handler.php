@@ -45,4 +45,16 @@ class Handler extends ExceptionHandler
             //
         });
     }
+
+    public function unauthenticated($request, \Illuminate\Auth\AuthenticationException $exception)
+    {
+        if($request->expectsJson()){
+            return response()->json([
+                'success' => false,
+                'message' => 'Unauthenticated'
+            ]);
+        }
+
+        return redirect()->route('login');
+    }
 }

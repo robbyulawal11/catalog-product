@@ -110,3 +110,10 @@ Route::middleware('auth')->group(function(){
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+
+Route::get('/export/users', [App\Http\Controllers\ReportController::class, 'exportUsers']);
+Route::get('/export/schools', [App\Http\Controllers\ReportController::class, 'exportSchools']);
+
+Route::get('/import', [App\Http\Controllers\ReportController::class, 'importForm']);
+Route::post('/import/school', [App\Http\Controllers\ReportController::class, 'importSchools']);
